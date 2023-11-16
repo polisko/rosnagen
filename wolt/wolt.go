@@ -111,7 +111,7 @@ func (w *WoltImport) SaveToFile(s string) error {
 	return err
 }
 
-func (w *WoltImport) UpdateByExcel(ex []readexcel.Item) error {
+func (w *WoltImport) UpdateByExcel(ex []readexcel.Item, packagePrice float64) error {
 	for _, v := range ex {
 		for kk, vv := range w.Items {
 			if vv.ID.Oid == v.OID {
@@ -120,9 +120,9 @@ func (w *WoltImport) UpdateByExcel(ex []readexcel.Item) error {
 					//	fmt.Printf("Menim polozku z %q na %q\n", w.Items[kk].Name[0].Value, v.Description)
 					w.Items[kk].Name[0].Value = v.Description
 				}
-				if w.Items[kk].BasePrice != int(v.Price)*100 {
+				if w.Items[kk].BasePrice != int(v.Price+packagePrice)*100 {
 					//	fmt.Printf("Menim cenu z %d na %d\n", w.Items[kk].BasePrice/100, int(v.Price))
-					w.Items[kk].BasePrice = int(v.Price) * 100
+					w.Items[kk].BasePrice = int(v.Price+packagePrice) * 100
 				}
 				fmt.Printf("%s %d\n", w.Items[kk].Name[0].Value, w.Items[kk].BasePrice/100)
 			}

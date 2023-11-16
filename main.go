@@ -14,6 +14,7 @@ func main() {
 	woltFile := flag.String("o", "restaurace-rosnicka.json", "Export file z Woltu")
 	woltFileNew := flag.String("n", "restaurace-rosnicka_novy.json", "Novy file pro import")
 	excelSheet := flag.String("s", "List 1", "Nazev excel sheetu s menu")
+	packagePrice := flag.Float64("p", 15, "Cena za obal")
 
 	flag.Parse()
 
@@ -25,7 +26,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	w.UpdateByExcel(e)
+	w.UpdateByExcel(e, *packagePrice)
 	err = w.SaveToFile(*woltFileNew)
 	if err != nil {
 		log.Fatal(err)
